@@ -12,13 +12,25 @@ public class DrogueriaJose {
         frame.setSize(800, 720);
         frame.setLayout(new BorderLayout());
 
-       
-        //  imagen, pero no funciona 
+     // Panel para la imagen
         JPanel imagePanel = new JPanel();
-        ImageIcon medicamentoImage = new ImageIcon("src/main/java/com/drogueria/imagenes/medicamentos.jpg");
+        imagePanel.setLayout(new BorderLayout());
+
+     // Cargar la imagen desde los recursos utilizando la clase actual
+        ImageIcon medicamentoImage = new ImageIcon(DrogueriaJose.class.getResource("/com/drogueria/imagenes/medicamentos.jpg"));
+
+
+        // Crear una etiqueta para mostrar la imagen
         JLabel imageLabel = new JLabel(medicamentoImage);
-        imagePanel.add(imageLabel);
-        frame.add(imagePanel, BorderLayout.NORTH);  // Agregar la imagen en la parte superior
+        imageLabel.setHorizontalAlignment(JLabel.CENTER); // Centrar la imagen en el panel
+        imagePanel.add(imageLabel, BorderLayout.CENTER);
+
+        // Ajustar el tamaño del panel de imagen
+        imagePanel.setPreferredSize(new Dimension(200, frame.getHeight())); // Ancho fijo, altura dinámica
+
+        // Agregar el panel de imagen a la parte izquierda del frame
+        frame.add(imagePanel, BorderLayout.WEST);
+
 
         // formulario
         JPanel formPanel = new JPanel();
@@ -89,54 +101,68 @@ public class DrogueriaJose {
         btnConfirmar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nombreMedicamento = txtNombreMedicamento.getText();
 
-                // Obtener el valor seleccionado
+             // Validación del nombre del medicamento
+                String nombreMedicamento = txtNombreMedicamento.getText();
+                if (nombreMedicamento.isEmpty() || !nombreMedicamento.matches("[a-zA-Z0-9 ]+")) {
+                    JOptionPane.showMessageDialog(frame, "Debe ingresar un nombre válido para el medicamento.");
+                    txtNombreMedicamento.requestFocus(); // Enfocar el campo del nombre del medicamento
+                    return;
+                }
+
+                // Validación del tipo de medicamento
                 String tipoMedicamento = (String) comboTipoMedicamento.getSelectedItem();
-                
-                // Verificar si no se ha seleccionado un tipo de medicamento
                 if (tipoMedicamento.equals("Seleccione tipo de medicamento")) {
                     JOptionPane.showMessageDialog(frame, "Debe seleccionar un tipo de medicamento.");
+                    comboTipoMedicamento.requestFocus(); // Enfocar el combo box
                     return;
                 }
 
+                // Validación de la cantidad
                 String cantidadStr = txtCantidad.getText();
-                String distribuidor = rbtnCofarma.isSelected() ? "Cofarma" : rbtnEmpsephar.isSelected() ? "Empsephar" : rbtnCemefar.isSelected() ? "Cemefar" : "";
-                String sucursal = "";
-                if (chkSucursalPrincipal.isSelected()) sucursal += "Calle de la Rosa n. 28 ";
-                if (chkSucursalSecundaria.isSelected()) sucursal += "Calle Alcazabilla n. 3";
-
-                // Validación de los datos
-                if (nombreMedicamento.isEmpty() || !nombreMedicamento.matches("[a-zA-Z0-9 ]+")) {
-                    JOptionPane.showMessageDialog(frame, "Nombre del medicamento incorrecto.");
-                    return;
-                }
                 if (cantidadStr.isEmpty() || !cantidadStr.matches("\\d+")) {
-                    JOptionPane.showMessageDialog(frame, "Cantidad incorrecta");
+                    JOptionPane.showMessageDialog(frame, "Debe ingresar una cantidad válida (solo números).");
+                    txtCantidad.requestFocus(); // Enfocar el campo de cantidad
                     return;
                 }
                 int cantidad = Integer.parseInt(cantidadStr);
                 if (cantidad <= 0) {
-                    JOptionPane.showMessageDialog(frame, "Cantidad debe ser un mayor a 0");
+                    JOptionPane.showMessageDialog(frame, "La cantidad debe ser mayor a 0.");
+                    txtCantidad.requestFocus(); // Enfocar el campo de cantidad
                     return;
                 }
 
-                // Ahora se valida si se seleccionó un distribuidor
+                // Validación del distribuidor
+                String distribuidor = rbtnCofarma.isSelected() ? "Cofarma" : 
+                                      rbtnEmpsephar.isSelected() ? "Empsephar" : 
+                                      rbtnCemefar.isSelected() ? "Cemefar" : "";
                 if (distribuidor.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Debe seleccionar un distribuidor.");
-                    return;
+                    return; // No hay un foco específico porque es un grupo de botones
                 }
+
+                // Validación de las sucursales
+                String sucursal = "";
+                if (chkSucursalPrincipal.isSelected()) sucursal += "Calle de la Rosa n. 28 ";
+                if (chkSucursalSecundaria.isSelected()) sucursal += "Calle Alcazabilla n. 3";
                 if (sucursal.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Debe seleccionar una sucursal.");
+                    JOptionPane.showMessageDialog(frame, "Debe seleccionar al menos una sucursal.");
                     return;
                 }
 
                 // Si todo es correcto, mostrar el mensaje de confirmación
-                JOptionPane.showMessageDialog(frame, "Pedido confirmado a " + distribuidor +" " + sucursal);
+                JOptionPane.showMessageDialog(frame, "Pedido confirmado:\n" +
+                        "Medicamento: " + nombreMedicamento + "\n" +
+                        "Tipo: " + tipoMedicamento + "\n" +
+                        "Cantidad: " + cantidad + "\n" +
+                        "Distribuidor: " + distribuidor + "\n" +
+                        "Sucursal: " + sucursal);
+
+                
                 // Limpiar el formulario después de confirmar
                 txtNombreMedicamento.setText("");
                 txtCantidad.setText("");
-                comboTipoMedicamento.setSelectedIndex(0);  // Establecer "Seleccione tipo de medicamento"
+                comboTipoMedicamento.setSelectedIndex(0); // Establecer "Seleccione tipo de medicamento"
                 groupDistribuidores.clearSelection();
                 chkSucursalPrincipal.setSelected(false);
                 chkSucursalSecundaria.setSelected(false);
