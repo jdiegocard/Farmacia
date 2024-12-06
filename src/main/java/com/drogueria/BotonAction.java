@@ -17,7 +17,7 @@ public class BotonAction implements ActionListener {
         if (source.getText().equals("Confirmar")) {
             JOptionPane.showMessageDialog(frame, "Pedido Confirmado");
         } else if (source.getText().equals("Cancelar")) {
-            // Limpiar el formulario (ejemplo simple)
+            // Limpiar 
             frame.setTitle("Formulario Restablecido");
         }
     }
