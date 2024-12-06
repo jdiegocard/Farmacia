@@ -2,7 +2,6 @@ package com.drogueria;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class DrogueriaJose {
     public static void main(String[] args) {   
@@ -12,7 +11,8 @@ public class DrogueriaJose {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 720);
         frame.setLayout(new BorderLayout());
-
+        
+       
         /*// este codigo no me sirve sin embargo no lo quero perder
      // Panel para la imagen
         JPanel imagePanel = new JPanel();
@@ -92,99 +92,29 @@ public class DrogueriaJose {
         btnCancelar.setForeground(Color.WHITE);  
         
 
-        // Añadir los botones al formulario
+        // botones del formulario
         formPanel.add(btnConfirmar);
         formPanel.add(btnCancelar);
-
-        // Crear un panel para los componentes y agregarlo
-        frame.add(formPanel, BorderLayout.CENTER);  
-
-        // Acción de Confirmar
-        btnConfirmar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-             // Validación del nombre del medicamento
-                String nombreMedicamento = txtNombreMedicamento.getText();
-                if (nombreMedicamento.isEmpty() || !nombreMedicamento.matches("[a-zA-Z0-9 ]+")) {
-                    JOptionPane.showMessageDialog(frame, "Debe ingresar un nombre válido para el medicamento.");
-                    txtNombreMedicamento.requestFocus(); 
-                    return;
-                }
-
-                // Validación del tipo de medicamento
-                String tipoMedicamento = (String) comboTipoMedicamento.getSelectedItem();
-                if (tipoMedicamento.equals("Seleccione tipo de medicamento")) {
-                    JOptionPane.showMessageDialog(frame, "Debe seleccionar un tipo de medicamento.");
-                    comboTipoMedicamento.requestFocus(); 
-                    return;
-                }
-
-                // Validación de la cantidad
-                String cantidadStr = txtCantidad.getText();
-                if (cantidadStr.isEmpty() || !cantidadStr.matches("\\d+")) {
-                    JOptionPane.showMessageDialog(frame, "Debe ingresar una cantidad válida (solo números).");
-                    txtCantidad.requestFocus(); 
-                    return;
-                }
-                int cantidad = Integer.parseInt(cantidadStr);
-                if (cantidad <= 0) {
-                    JOptionPane.showMessageDialog(frame, "La cantidad debe ser mayor a 0.");
-                    txtCantidad.requestFocus(); 
-                    return;
-                }
-
-                // Validación del distribuidor
-                String distribuidor = rbtnCofarma.isSelected() ? "Cofarma" : 
-                                      rbtnEmpsephar.isSelected() ? "Empsephar" : 
-                                      rbtnCemefar.isSelected() ? "Cemefar" : "";
-                if (distribuidor.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Debe seleccionar un distribuidor.");
-                    return; 
-                }
-
-                // Validación de las sucursales
-                String sucursal = "";
-                if (chkSucursalPrincipal.isSelected()) sucursal += "Calle de la Rosa n. 28 ";
-                if (chkSucursalSecundaria.isSelected()) sucursal += "Calle Alcazabilla n. 3";
-                if (sucursal.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Debe seleccionar al menos una sucursal.");
-                    return;
-                }
-
-                // Si todo es correcto, mostrar el mensaje de confirmación
-                JOptionPane.showMessageDialog(frame, "Pedido confirmado:\n" +
-                        "Medicamento: " + nombreMedicamento + "\n" +
-                        "Tipo: " + tipoMedicamento + "\n" +
-                        "Cantidad: " + cantidad + "\n" +
-                        "Distribuidor: " + distribuidor + "\n" +
-                        "Sucursal: " + sucursal);
-
-                
-                // Limpiar el formulario después de confirmar
-                txtNombreMedicamento.setText("");
-                txtCantidad.setText("");
-                comboTipoMedicamento.setSelectedIndex(0); 
-                groupDistribuidores.clearSelection();
-                chkSucursalPrincipal.setSelected(false);
-                chkSucursalSecundaria.setSelected(false);
-                
-            }
-        });
-
-        // Acción de Cancelar (limpiar los campos)
-        btnCancelar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                txtNombreMedicamento.setText("");
-                txtCantidad.setText("");
-                comboTipoMedicamento.setSelectedIndex(0); 
-                groupDistribuidores.clearSelection();
-                chkSucursalPrincipal.setSelected(false);
-                chkSucursalSecundaria.setSelected(false);
-            }
-        });
-
+        
+        // agregar formulario
+        frame.add(formPanel, BorderLayout.CENTER);
+        
+        // Manejo de eventos
+        btnConfirmar.addActionListener(new BotonAction(frame, "Confirmar", 
+        		txtNombreMedicamento, 
+        		txtCantidad, 
+        		comboTipoMedicamento, 
+        		groupDistribuidores, 
+        		chkSucursalPrincipal, 
+        		chkSucursalSecundaria));
+        btnCancelar.addActionListener(new BotonAction(frame, "Cancelar", 
+        		txtNombreMedicamento, 
+        		txtCantidad, 
+        		comboTipoMedicamento, 
+        		groupDistribuidores, 
+        		chkSucursalPrincipal, 
+        		chkSucursalSecundaria));
+       
         // mostrar ventana
         frame.setVisible(true);
     }
