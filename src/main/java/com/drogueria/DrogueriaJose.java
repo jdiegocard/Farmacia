@@ -5,13 +5,15 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class DrogueriaJose {
-    public static void main(String[] args) {        
+    public static void main(String[] args) {   
+    	
       // ventana principal
     	JFrame frame = new JFrame("Pedido de Medicamentos");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 720);
         frame.setLayout(new BorderLayout());
 
+        /*// este codigo no me sirve sin embargo no lo quero perder
      // Panel para la imagen
         JPanel imagePanel = new JPanel();
         imagePanel.setLayout(new BorderLayout());
@@ -29,12 +31,12 @@ public class DrogueriaJose {
         imagePanel.setPreferredSize(new Dimension(200, frame.getHeight())); // Ancho fijo, altura dinámica
 
         // Agregar el panel de imagen a la parte izquierda del frame
-        frame.add(imagePanel, BorderLayout.WEST);
+        frame.add(imagePanel, BorderLayout.WEST);*/
 
 
         // formulario
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(6, 2, 10, 10)); // 6 filas y 2 columnas con espaciado
+        formPanel.setLayout(new GridLayout(6, 2, 10, 10)); // 6 filas y 2 columnas
 
         // componentes
         JTextField txtNombreMedicamento = new JTextField();
@@ -42,7 +44,7 @@ public class DrogueriaJose {
 
         // JComboBox
         JComboBox<String> comboTipoMedicamento = new JComboBox<>(new String[] {
-        "Seleccione tipo de medicamento", "Analgésico", "Analeptico", "Anestésico", "Antiácido", "Antidepresivo", "Antibiótico"}); //Medicamentos Disponibles
+        "Seleccione tipo de medicamento", "Analgésico", "Analeptico", "Anestésico", "Antiácido", "Antidepresivo", "Antibiótico"}); 
         JRadioButton rbtnCofarma = new JRadioButton("Cofarma"); 
         JRadioButton rbtnEmpsephar = new JRadioButton("Empsephar");
         JRadioButton rbtnCemefar = new JRadioButton("Cemefar");
@@ -81,13 +83,13 @@ public class DrogueriaJose {
         JButton btnCancelar = new JButton("Cancelar");
         
         // Estilo del botón Confirmar (color verde)
-        btnConfirmar.setBackground(new Color(0, 128, 0));  // Fondo verde
-        btnConfirmar.setForeground(Color.WHITE);  // Texto blanco
+        btnConfirmar.setBackground(new Color(0, 128, 0));  
+        btnConfirmar.setForeground(Color.WHITE); 
        
 
         // Estilo del botón Cancelar (color rojo)
-        btnCancelar.setBackground(new Color(255, 0, 0));  // Fondo rojo
-        btnCancelar.setForeground(Color.WHITE);  // Texto blanco
+        btnCancelar.setBackground(new Color(255, 0, 0));  
+        btnCancelar.setForeground(Color.WHITE);  
         
 
         // Añadir los botones al formulario
@@ -106,7 +108,7 @@ public class DrogueriaJose {
                 String nombreMedicamento = txtNombreMedicamento.getText();
                 if (nombreMedicamento.isEmpty() || !nombreMedicamento.matches("[a-zA-Z0-9 ]+")) {
                     JOptionPane.showMessageDialog(frame, "Debe ingresar un nombre válido para el medicamento.");
-                    txtNombreMedicamento.requestFocus(); // Enfocar el campo del nombre del medicamento
+                    txtNombreMedicamento.requestFocus(); 
                     return;
                 }
 
@@ -114,7 +116,7 @@ public class DrogueriaJose {
                 String tipoMedicamento = (String) comboTipoMedicamento.getSelectedItem();
                 if (tipoMedicamento.equals("Seleccione tipo de medicamento")) {
                     JOptionPane.showMessageDialog(frame, "Debe seleccionar un tipo de medicamento.");
-                    comboTipoMedicamento.requestFocus(); // Enfocar el combo box
+                    comboTipoMedicamento.requestFocus(); 
                     return;
                 }
 
@@ -122,13 +124,13 @@ public class DrogueriaJose {
                 String cantidadStr = txtCantidad.getText();
                 if (cantidadStr.isEmpty() || !cantidadStr.matches("\\d+")) {
                     JOptionPane.showMessageDialog(frame, "Debe ingresar una cantidad válida (solo números).");
-                    txtCantidad.requestFocus(); // Enfocar el campo de cantidad
+                    txtCantidad.requestFocus(); 
                     return;
                 }
                 int cantidad = Integer.parseInt(cantidadStr);
                 if (cantidad <= 0) {
                     JOptionPane.showMessageDialog(frame, "La cantidad debe ser mayor a 0.");
-                    txtCantidad.requestFocus(); // Enfocar el campo de cantidad
+                    txtCantidad.requestFocus(); 
                     return;
                 }
 
@@ -138,7 +140,7 @@ public class DrogueriaJose {
                                       rbtnCemefar.isSelected() ? "Cemefar" : "";
                 if (distribuidor.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Debe seleccionar un distribuidor.");
-                    return; // No hay un foco específico porque es un grupo de botones
+                    return; 
                 }
 
                 // Validación de las sucursales
@@ -162,7 +164,7 @@ public class DrogueriaJose {
                 // Limpiar el formulario después de confirmar
                 txtNombreMedicamento.setText("");
                 txtCantidad.setText("");
-                comboTipoMedicamento.setSelectedIndex(0); // Establecer "Seleccione tipo de medicamento"
+                comboTipoMedicamento.setSelectedIndex(0); 
                 groupDistribuidores.clearSelection();
                 chkSucursalPrincipal.setSelected(false);
                 chkSucursalSecundaria.setSelected(false);
@@ -176,14 +178,14 @@ public class DrogueriaJose {
             public void actionPerformed(ActionEvent e) {
                 txtNombreMedicamento.setText("");
                 txtCantidad.setText("");
-                comboTipoMedicamento.setSelectedIndex(0);  // Establecer "Seleccione un tipo de medicamento"
+                comboTipoMedicamento.setSelectedIndex(0); 
                 groupDistribuidores.clearSelection();
                 chkSucursalPrincipal.setSelected(false);
                 chkSucursalSecundaria.setSelected(false);
             }
         });
 
-        // Hacer visible la ventana
+        // mostrar ventana
         frame.setVisible(true);
     }
 }
