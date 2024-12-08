@@ -12,31 +12,9 @@ public class DrogueriaJose {
         frame.setSize(800, 720);
         frame.setLayout(new BorderLayout());
         
-       
-        /*// este codigo no me sirve sin embargo no lo quero perder
-     // Panel para la imagen
-        JPanel imagePanel = new JPanel();
-        imagePanel.setLayout(new BorderLayout());
-
-     // Cargar la imagen desde los recursos utilizando la clase actual
-        ImageIcon medicamentoImage = new ImageIcon(DrogueriaJose.class.getResource("/com/drogueria/imagenes/medicamentos.jpg"));
-
-
-        // Crear una etiqueta para mostrar la imagen
-        JLabel imageLabel = new JLabel(medicamentoImage);
-        imageLabel.setHorizontalAlignment(JLabel.CENTER); // Centrar la imagen en el panel
-        imagePanel.add(imageLabel, BorderLayout.CENTER);
-
-        // Ajustar el tamaño del panel de imagen
-        imagePanel.setPreferredSize(new Dimension(200, frame.getHeight())); // Ancho fijo, altura dinámica
-
-        // Agregar el panel de imagen a la parte izquierda del frame
-        frame.add(imagePanel, BorderLayout.WEST);*/
-
-
         // formulario
         JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridLayout(6, 2, 10, 10)); // 6 filas y 2 columnas
+        formPanel.setLayout(new GridLayout(6, 2, 10, 10));
 
         // componentes
         JTextField txtNombreMedicamento = new JTextField();

@@ -12,9 +12,10 @@ public class BotonAction implements ActionListener {
     private ButtonGroup groupDistribuidores;
     private JCheckBox chkSucursalPrincipal, chkSucursalSecundaria;
 
-    public BotonAction(JFrame frame, String action, 
-    		JTextField txtNombreMedicamento, 
-    		JTextField txtCantidad,
+    public BotonAction(JFrame frame, 
+    		String action, 
+    				JTextField txtNombreMedicamento, 
+    				JTextField txtCantidad,
                        JComboBox<String> comboTipoMedicamento, 
                        ButtonGroup groupDistribuidores,
                        JCheckBox chkSucursalPrincipal, 
@@ -77,12 +78,12 @@ public class BotonAction implements ActionListener {
         String sucursal = "";
         if (chkSucursalPrincipal.isSelected()) sucursal += "Principal Calle de la Rosa n. 28 ";
         if (chkSucursalSecundaria.isSelected()) sucursal += "Secundaria Calle Alcazabilla n. 3";
-        		/* (chkSucursalPrincipal.isSelected() ? "Farmacia Principal " : "") +
-                (chkSucursalSecundaria.isSelected() ? "Farmacia Secundaria" : "");*/
         if (sucursal.isEmpty()) {
             JOptionPane.showMessageDialog(frame, "Debe seleccionar al menos una sucursal.");
             return;
         }
+        
+        // Confirmación de información
 
         int opcion = JOptionPane.showConfirmDialog(
                 frame,
@@ -103,8 +104,7 @@ public class BotonAction implements ActionListener {
             		"Cantidad: " + cantidadStr + "\n" +
             		"Distribuidor: " + distribuidor + "\n" +
             		"Sucursal: " + sucursal);
-            
-            		limpiarFormulario();
+                    limpiarFormulario();
         };
         
       }
