@@ -16,7 +16,7 @@ public class BotonAction implements ActionListener {
     		String action, 
     				JTextField txtNombreMedicamento, 
     				JTextField txtCantidad,
-                       JComboBox<String> comboTipoMedicamento, 
+                       JComboBox<String> comboTipoMedicamento,
                        ButtonGroup groupDistribuidores,
                        JCheckBox chkSucursalPrincipal, 
                        JCheckBox chkSucursalSecundaria) {
@@ -108,7 +108,7 @@ public class BotonAction implements ActionListener {
         };
         
       }
-
+// cancelar pedido
     private void cancelarPedido() {
         int opcion = JOptionPane.showConfirmDialog(
                 frame,
@@ -123,6 +123,7 @@ public class BotonAction implements ActionListener {
         }
     }
 
+    //limpiar formulario
     private void limpiarFormulario() {
         txtNombreMedicamento.setText("");
         txtCantidad.setText("");
